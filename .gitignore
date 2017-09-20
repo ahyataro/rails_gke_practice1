@@ -1,0 +1,13 @@
+rails_app/.bundle
+
+rails_app/log/*
+rails_app/tmp/*
+!rails_app/log/.keep
+!rails_app/tmp/.keep
+
+rails_app/vendor
+rails_app/.idea
+
+cloud_sql_proxy
+.ssh
+.idea

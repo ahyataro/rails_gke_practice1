@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: rails
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: rails
+      labels:
+        app: rails
+    spec:
+      containers:
+        - image: localhost:5000/ahyataro/docker-mysql-rails
+          name: rails
+          env:
+            - name: RAILS_ENV
+              value: productionn
+            - name: MYSQL_HOST
+              value: mysql:3306
+            - name: MYSQL_USER
+              value: root
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql
+                  key: password
+          ports:
+            - containerPort: 3000
