@@ -39,6 +39,11 @@ spec:
           ports:
             - containerPort: 3000
               name: testapp
+          volumeMounts:
+            - mountPath: /myapp/public
+              name: web-assets
+            - mountPath: /myapp/tmp/sockets
+              name: web-sock
         - image: b.gcr.io/cloudsql-docker/gce-proxy:1.05
           name: cloudsql-proxy
           command: ["/cloud_sql_proxy", "--dir=/cloudsql",
@@ -50,7 +55,24 @@ spec:
               readOnly: true
             - name: ssl-certs
               mountPath: /etc/ssl/certs
+        - image: gcr.io/gke-project-179823/nginx:latest
+          name: nginx
+          ports:
+            - name: http-server
+              containerPort: 80
+            - name: https-server
+              containerPort: 443
+          volumeMounts:
+            - mountPath: /myapp/public
+              name: web-assets
+              readOnly: true
+            - mountPath: /myapp/tmp/sockets
+              name: web-sock
       volumes:
+        - name: web-assets
+          emptyDir: {}
+        - name: web-sock
+          emptyDir: {}
         - name: cloudsql-oauth-credentials
           secret:
             secretName: cloudsql-oauth-credentials

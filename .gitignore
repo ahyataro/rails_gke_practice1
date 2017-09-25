@@ -8,6 +8,8 @@ rails_app/tmp/*
 rails_app/vendor
 rails_app/.idea
 
+nginx/nginx.conf
+
 cloud_sql_proxy
 .ssh
 .idea
