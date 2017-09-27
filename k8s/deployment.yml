@@ -10,7 +10,7 @@ spec:
         app: testapp
     spec:
       containers:
-        - image: gcr.io/gke-project-179823/rails_app:latest
+        - image: gcr.io/gke-project-181000/rails_app:latest
           name: web
           env:
             - name: RAILS_DB_HOST
@@ -42,7 +42,7 @@ spec:
         - image: b.gcr.io/cloudsql-docker/gce-proxy:1.05
           name: cloudsql-proxy
           command: ["/cloud_sql_proxy", "--dir=/cloudsql",
-                    "-instances=gke-project-179823:asia-east1:mysql-1=tcp:3306",
+                    "-instances=gke-project-181000:asia-east1:mysql-1=tcp:3306",
                     "-credential_file=/secrets/cloudsql/credentials.json"]
           volumeMounts:
             - name: cloudsql-oauth-credentials

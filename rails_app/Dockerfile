@@ -14,5 +14,5 @@ RUN bundle install --path vendor/bundle
 CMD \
     bundle exec rails db:migrate && \
     bundle exec rake assets:precompile && \
-    bundle exec unicorn_rails -c config/unicorn.rb -E production -D
+    bundle exec rails s -p 3000 -b '0.0.0.0'
 
