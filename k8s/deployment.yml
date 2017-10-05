@@ -55,7 +55,7 @@ spec:
               readOnly: true
             - name: ssl-certs
               mountPath: /etc/ssl/certs
-        - image: gcr.io/gke-project-179823/nginx:latest
+        - image: gcr.io/gke-project-181000/nginx:latest
           name: nginx
           ports:
             - name: http-server

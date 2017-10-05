@@ -1,4 +1,4 @@
-FROM ruby:2.3.1
+FROM ruby:2.4.0
 ENV LANG C.UTF-8
 RUN apt-get update -qq && apt-get install -y build-essential nodejs
 RUN mkdir /myapp
@@ -14,5 +14,4 @@ RUN bundle install --path vendor/bundle
 CMD \
     bundle exec rails db:migrate && \
     bundle exec rake assets:precompile && \
-    bundle exec rails s -p 3000 -b '0.0.0.0'
-
+    bundle exec unicorn -c config/unicorn.rb -E production
