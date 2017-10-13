@@ -12,6 +12,7 @@ ADD . /myapp
 RUN bundle install --path vendor/bundle
 
 CMD \
+    bundle exec rails db:create && \
     bundle exec rails db:migrate && \
     bundle exec rake assets:precompile && \
     bundle exec unicorn -c config/unicorn.rb -E production

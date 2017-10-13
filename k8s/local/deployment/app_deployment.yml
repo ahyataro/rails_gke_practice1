@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - image: gcr.io/gke-project-181000/rails_app:v2
+          name: web
+          env:
+            - name: RAILS_DB_HOST
+              value: mysql.default.svc.cluster.local
+            - name: RAILS_DB_USER
+              value: root
+            - name: RAILS_DB_PASSWORD
+              value: password
+            - name: SECRET_KEY_BASE
+              value: 'hoge'
+            - name: RAILS_ENV
+              value: production
+            - name: RACK_ENV
+              value: production
+          ports:
+            - containerPort: 3000
+              name: app
+          volumeMounts:
+            - mountPath: /myapp/public
+              name: web-assets
+            - mountPath: /myapp/tmp/sockets
+              name: web-sock
+        - image: gcr.io/gke-project-181000/nginx:latest
+          name: nginx
+          ports:
+            - name: http-server
+              containerPort: 80
+            - name: https-server
+              containerPort: 443
+          volumeMounts:
+            - mountPath: /myapp/public
+              name: web-assets
+              readOnly: true
+            - mountPath: /myapp/tmp/sockets
+              name: web-sock
+      volumes:
+        - name: web-assets
+          emptyDir: {}
+        - name: web-sock
+          emptyDir: {}
